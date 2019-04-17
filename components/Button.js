@@ -1,23 +1,41 @@
 import React, { Component } from 'react'
 import { StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { Audio } from 'expo';
+
 
 export default class Button extends Component {
+    state = {
+        sound: new Audio.Sound()
+    }
 
-  playSound = (sound) => {
-    sound.stop(() => sound.play())
-  }
+    componentDidMount = async () => {
+        try {
+            await this.loadSound()
+        } catch(error) {
+            console.log(error)
+        }
+    }
 
-  render(){
-    const { sound } = this.props
+    loadSound = async () => {
+        await this.state.sound.loadAsync(this.props.sound)
+    }
 
-    return(
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={buttonStyle.button}
-        onPress={() => this.playSound(sound)}
-      />
-    )
-  }
+    playSound = () => {
+        this.state.sound.setPositionAsync(0);
+        this.state.sound.replayAsync()
+        this.state.sound.setPositionAsync(0);
+
+    }
+
+    render(){
+        return(
+            <TouchableOpacity
+                activeOpacity={0.7}
+                style={buttonStyle.button}
+                onPress={this.playSound}
+            />
+        )
+    }
 }
 
 const buttonStyle = StyleSheet.create({
