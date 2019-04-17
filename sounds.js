@@ -16,7 +16,6 @@ const snare_03 = require('./JK_SNR_03.wav')
 const snare_04 = require('./JK_SNR_04.wav')
 const snare_05 = require('./JK_SNR_07.wav')
 
-
 let sounds = []
 
 sounds.push(
